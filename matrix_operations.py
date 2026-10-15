@@ -16,8 +16,11 @@ def _scale_row(m: Matrix, i: int, factor: Fraction) -> None:
         m[i][j] *= factor
 
 def _add_multiple(m: Matrix, target: int, source: int, factor: Fraction) -> None:
-    """Row[target] += factor * Row[source]."""
-    raise NotImplementedError
+    """Add to target: row source scaled by factor in place"""
+    if factor == 0:
+        raise ValueError("Cannot scale a row by zero")
+    for j in range(len(m[0])):
+        m[target][j] += factor * m[source][j]
 
 
 def row_reduce(matrix: Matrix) -> Matrix:

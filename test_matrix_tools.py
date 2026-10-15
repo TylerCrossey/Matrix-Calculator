@@ -6,6 +6,12 @@ from matrix_operations import inverse
 
 from matrix_operations import _scale_row
 
+from matrix_operations import _add_multiple
+
+def test_add_multiple():
+    m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
+    _add_multiple(m, 0, 1, Fraction(2))
+    assert m == [[Fraction(7), Fraction(10)], [Fraction(3), Fraction(4)]]
 
 def test_scale_row():
     m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
