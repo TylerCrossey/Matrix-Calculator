@@ -34,31 +34,31 @@ def row_reduce(matrix: Matrix) -> Matrix:
     """Return the reduced echelon form of a matrix.
     The input is not modified.
     """
+    pivot_row = 0
+    rows, cols = len(m), len(m[0])
+    m = [row[:] for row in matrix]  
     
-    m = [row[:] for row in matrix]  #copy the input matrix
-    
-    #find leftmost non-zero column
-    for j in range(len(m)):
-        for i in range(len(m[0])):
-            if(m[i][j] != 0):
-                pivot_col = j
-                if(i != 0): #if top of pivot column = 0, swap it with a row of nonzero value
-                    _swap_rows(m, i, 0)
-                break
-    
-    
-    #scale that row so pivot = 1
-    _scale_row(m, 0, 1 / m[0][pivot_col])
 
-    #use add multiple to zero the rest of the column
-    for i in range(len(m)):
-        if(m[i][pivot_col] != 0):
-            _add_multiple(m, i, 0, -1 / m[0][pivot_col])
+    for col in range(cols):
+        if pivot_row >= rows: #check if all rows have been reduced
+            break
 
-    #ignoring pivot row and rows above, repeat
+        found = _find_pivot_row(m, pivot_row, col) 
+        if found is None:
+            continue    #no pivot in this column
 
+        if found != pivot_row:
+            _swap_rows(m, found, pivot_row) #swap found pivot to top of submatrix
 
-    raise NotImplementedError
+        _scale_row(m, pivot_row, 1 / m[pivot_row][col]) #scale that row so pivot = 1
+
+        for i in range(rows): #clear the rest of the column   
+            if m[i][pivot_col] != 0 and i != pivot_row:
+                _add_multiple(m, i, 0, -1 / m[i][pivot_col])
+
+        pivot_row += 1
+
+    return m
 
 
 def _identity(n: int) -> Matrix:
