@@ -24,11 +24,23 @@ def test_scale_row():
     mo._scale_row(m, 1, Fraction(1, 2))
     assert m == [[Fraction(1), Fraction(2)], [Fraction(3, 2), Fraction(2)]]
 
+def test_find_pivot_row():
+    m = [[Fraction(1), Fraction(0)], [Fraction(0), Fraction(1)]]
+    assert mo._find_pivot_row(m, 0, 0) == 0
+    
+def test_find_pivot_row_none_in_co():
+    m = [[Fraction(0), Fraction(1)], [Fraction(0), Fraction(1)]]
+    assert mo._find_pivot_row(m, 0, 0) == None
 
-def test_row_reduce_zero_matrix():
-    zero_matrix = [[Fraction(0), Fraction(0)], [Fraction(0), Fraction(0)]]
-    with pytest.raises(ValueError):
-        mo.row_reduce(zero_matrix)
+def test_row_reduce_rank_deficient():
+    m = [
+        [Fraction(1), Fraction(2)],
+        [Fraction(2), Fraction(4)],
+    ]
+    assert mo.row_reduce(m) == [
+        [Fraction(1), Fraction(2)],
+        [Fraction(0), Fraction(0)],
+    ]
 
 
 def test_inverse_of_identity_is_identity():

@@ -27,7 +27,7 @@ def _find_pivot_row(m: Matrix, start_row: int, col: int) -> int | None:
     """Return the first row at or below start_row with a nonzero entry in col."""
     for i in range(start_row, len(m)):
         if m[i][col] != 0:
-            return i:
+            return i
     return None
 
 def row_reduce(matrix: Matrix) -> Matrix:
@@ -35,8 +35,8 @@ def row_reduce(matrix: Matrix) -> Matrix:
     The input is not modified.
     """
     pivot_row = 0
+    m = [row[:] for row in matrix] 
     rows, cols = len(m), len(m[0])
-    m = [row[:] for row in matrix]  
     
 
     for col in range(cols):
@@ -53,8 +53,8 @@ def row_reduce(matrix: Matrix) -> Matrix:
         _scale_row(m, pivot_row, 1 / m[pivot_row][col]) #scale that row so pivot = 1
 
         for i in range(rows): #clear the rest of the column   
-            if m[i][pivot_col] != 0 and i != pivot_row:
-                _add_multiple(m, i, 0, -1 / m[i][pivot_col])
+            if m[i][col] != 0 and i != pivot_row:
+                _add_multiple(m, i, 0, -m[i][col])
 
         pivot_row += 1
 
