@@ -4,6 +4,14 @@ import pytest
 
 from matrix_operations import inverse
 
+from matrix_operations import _scale_row
+
+
+def test_scale_row():
+    m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
+    _scale_row(m, 1, Fraction(1, 2))
+    assert m == [[Fraction(1), Fraction(2)], [Fraction(3, 2), Fraction(2)]]
+
 
 def test_inverse_of_identity_is_identity():
     identity = [[Fraction(1), Fraction(0)], [Fraction(0), Fraction(1)]]

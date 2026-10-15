@@ -6,11 +6,14 @@ Matrix = list[list[Fraction]]
 
 def _swap_rows(m: Matrix, i: int, j: int) -> None:
     """Swap rows i and j of m in place."""
-    raise NotImplementedError
+    m[i], m[j] = m[j], m[i]
 
 def _scale_row(m: Matrix, i: int, factor: Fraction) -> None:
     """Multiply row i by factor in place."""
-    raise NotImplementedError
+    if factor == 0:
+        raise ValueError("Cannot scale a row by zero")
+    for j in range(len(m[0])):
+        m[i][j] *= factor
 
 def _add_multiple(m: Matrix, target: int, source: int, factor: Fraction) -> None:
     """Row[target] += factor * Row[source]."""
@@ -29,9 +32,10 @@ def row_reduce(matrix: Matrix) -> Matrix:
 
     raise NotImplementedError
 
+
 def _identity(n: int) -> Matrix:
     """Return the identity matrix of size nxn."""
-    raise NotImplementedError
+    return [[Fraction(int(i==j)) for j in range(n)] for i in range [n]]
 
 def _augment(left: Matrix, right: Matrix) -> Matrix:
     """Return left matrix augmented with right matrix"""
