@@ -9,6 +9,16 @@ def test_add_multiple():
     mo._add_multiple(m, 0, 1, Fraction(2))
     assert m == [[Fraction(7), Fraction(10)], [Fraction(3), Fraction(4)]]
 
+def test_add_multiple_zero_factor_changes_nothing():
+    m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
+    mo._add_multiple(m, 1, 0, Fraction(0))
+    assert m == [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
+
+def test_add_multiple_fractional_factor():
+    m = [[Fraction(2), Fraction(4)], [Fraction(1), Fraction(1)]]
+    mo._add_multiple(m, 1, 0, Fraction(1, 2))
+    assert m == [[Fraction(2), Fraction(4)], [Fraction(2), Fraction(3)]]
+
 def test_scale_row():
     m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
     mo._scale_row(m, 1, Fraction(1, 2))

@@ -16,9 +16,10 @@ def _scale_row(m: Matrix, i: int, factor: Fraction) -> None:
         m[i][j] *= factor
 
 def _add_multiple(m: Matrix, target: int, source: int, factor: Fraction) -> None:
-    """Add to target: row source scaled by factor in place"""
-    if factor == 0:
-        raise ValueError("Cannot scale a row by zero")
+    """Add factor times row source to row target, in place."""
+    if factor == 0: return
+    if target == source:
+        raise ValueError("Target and source rows must differ")
     for j in range(len(m[0])):
         m[target][j] += factor * m[source][j]
 
