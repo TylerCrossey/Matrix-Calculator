@@ -2,29 +2,25 @@ from fractions import Fraction
 
 import pytest
 
-from matrix_operations import inverse
-
-from matrix_operations import _scale_row
-
-from matrix_operations import _add_multiple
+import matrix_operations as mo
 
 def test_add_multiple():
     m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
-    _add_multiple(m, 0, 1, Fraction(2))
+    mo._add_multiple(m, 0, 1, Fraction(2))
     assert m == [[Fraction(7), Fraction(10)], [Fraction(3), Fraction(4)]]
 
 def test_scale_row():
     m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
-    _scale_row(m, 1, Fraction(1, 2))
+    mo._scale_row(m, 1, Fraction(1, 2))
     assert m == [[Fraction(1), Fraction(2)], [Fraction(3, 2), Fraction(2)]]
 
 
 def test_inverse_of_identity_is_identity():
-    identity = [[Fraction(1), Fraction(0)], [Fraction(0), Fraction(1)]]
+    mo.identity = [[Fraction(1), Fraction(0)], [Fraction(0), Fraction(1)]]
     assert inverse(identity) == identity
 
 
 def test_singular_matrix_raises():
     singular = [[Fraction(1), Fraction(2)], [Fraction(2), Fraction(4)]]
     with pytest.raises(ValueError):
-        inverse(singular)
+        mo.inverse(singular)
