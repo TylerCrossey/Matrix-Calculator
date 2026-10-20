@@ -42,6 +42,20 @@ def test_row_reduce_rank_deficient():
         [Fraction(0), Fraction(0)],
     ]
 
+def test_augment():
+    left = [
+        [Fraction(1), Fraction(2)],
+        [Fraction(2), Fraction(4)],
+    ]
+    identity = [
+        [Fraction(1), Fraction(0)], 
+        [Fraction(0), Fraction(1)], 
+        ]
+    assert mo._augment(left, identity) == [
+        [Fraction(1), Fraction(2), Fraction(1), Fraction(0)],
+        [Fraction(2), Fraction(4), Fraction(0), Fraction(1)],
+        ]
+
 
 def test_inverse_of_identity_is_identity():
     mo.identity = [[Fraction(1), Fraction(0)], [Fraction(0), Fraction(1)]]

@@ -67,7 +67,17 @@ def _identity(n: int) -> Matrix:
 
 def _augment(left: Matrix, right: Matrix) -> Matrix:
     """Return left matrix augmented with right matrix"""
-    raise NotImplementedError
+    l_rows, l_cols = len(left), len(left[0])
+    r_rows, r_cols = len(right), len(right[0])
+
+    if r_rows != l_rows:
+        raise ValueError("Left and right matrices must have same number of rows")
+    
+    #create tuples of (row(left), row(right)), then unpack with for a, b and cat
+    return [a + b for a, b in zip(left, right)] 
+
+
+    
 
 def inverse(matrix: Matrix) -> Matrix:
     """Return the inverse of a square matrix.
