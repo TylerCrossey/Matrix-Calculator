@@ -86,4 +86,11 @@ def inverse(matrix: Matrix) -> Matrix:
         ValueError: if the matrix is not square or is singular.
     """
 
+    #raise error if not square
+    #if 2x2, check determinant != 0, then do determinant shenanigans
+    #otherwise, send row reduction (will need to be implemented anyway)
+    # - augment nxn identity, call modified row_reduce for auged matrices?
+    # - maybe just overload with cols as argument for row_reduce (row_reduce(m, n = len(m)))
+    #figure out determinant for error checking later
+
     raise NotImplementedError
