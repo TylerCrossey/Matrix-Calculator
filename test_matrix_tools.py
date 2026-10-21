@@ -1,8 +1,19 @@
 from fractions import Fraction
-
 import pytest
-
 import matrix_operations as mo
+from shell import MatrixShell
+
+@pytest.fixture
+def shell():
+    return MatrixShell() #fresh shell made for each test
+
+#shell functions
+
+def test_set_stores_matrix(shell):
+    shell.onecmd("set A 1,1/2;3,4")
+    assert shell.matrices["A"] == [[Fraction(1), Fraction(1/2)], [Fraction(3), Fraction(4)]]
+
+#mo helpers
 
 def test_add_multiple():
     m = [[Fraction(1), Fraction(2)], [Fraction(3), Fraction(4)]]
@@ -31,6 +42,8 @@ def test_find_pivot_row():
 def test_find_pivot_row_none_in_co():
     m = [[Fraction(0), Fraction(1)], [Fraction(0), Fraction(1)]]
     assert mo._find_pivot_row(m, 0, 0) == None
+
+#mo functions
 
 def test_row_reduce_rank_deficient():
     m = [
