@@ -6,6 +6,8 @@ Matrix = list[list[Fraction]]
 
 def _swap_rows(m: Matrix, i: int, j: int) -> None:
     """Swap rows i and j of m in place."""
+    if i>len(m) or j>len(m):
+        raise ValueError("Swap target out of matrix bounds") 
     m[i], m[j] = m[j], m[i]
 
 def _scale_row(m: Matrix, i: int, factor: Fraction) -> None:
