@@ -32,6 +32,7 @@ def _find_pivot_row(m: Matrix, start_row: int, col: int) -> int | None:
             return i
     return None
 
+
 def row_reduce(matrix: Matrix) -> Matrix:
     """Return the reduced echelon form of a matrix.
     The input is not modified.
@@ -62,7 +63,6 @@ def row_reduce(matrix: Matrix) -> Matrix:
 
     return m
 
-
 def _identity(n: int) -> Matrix:
     """Return the identity matrix of size nxn."""
     return [[Fraction(int(i==j)) for j in range(n)] for i in range [n]]
@@ -75,10 +75,32 @@ def _augment(left: Matrix, right: Matrix) -> Matrix:
     if r_rows != l_rows:
         raise ValueError("Left and right matrices must have same number of rows")
     
-    #create tuples of (row(left), row(right)), then unpack with for a, b and cat
+    #create tuples of (row(left), row(right)), then unpack with for a, b, and combine
     return [a + b for a, b in zip(left, right)] 
 
+def _dot_product(list1: Fraction, list2: Fraction) -> int:
+    """Returns the dot product of two arrays of fractions"""
+    sum = 0
+    for i, j in zip(list1, list2):
+        sum += i*j
+    return sum
 
+
+def matrix_mul(left: Matrix, right: Matrix) -> Matrix:
+    """Return left matrix multiplied by right matrix"""
+    if len(right) != len(left[0]):
+        raise ValueError("Number of columns in left matrix and rows in right matrix must be equal")
+    m = []
+    
+    cols = list(zip(*right)) 
+    for row in left:
+        new_row = []
+        for col in cols:
+            new_row.append(_dot_product(row, col))
+        m.append(new_row)
+
+    return m
+    
     
 
 def inverse(matrix: Matrix) -> Matrix:
