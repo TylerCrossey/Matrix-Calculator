@@ -7,9 +7,10 @@ from shell import MatrixShell
 def shell():
     return MatrixShell() #fresh shell made for each test
 
+@pytest.fixture
 def shell_with_A(shell, m2x2):
     shell.matrices["A"] = m2x2
-    return shell_A
+    return shell
 
 @pytest.fixture
 def m2x2():
@@ -26,6 +27,13 @@ def identity2x2():
 def test_set_stores_matrix(shell, m2x2):
     shell.onecmd("set A 1,1/2;3,4")
     assert shell.matrices["A"] == m2x2
+
+def test_do_mul(shell_with_A):
+    shell_with_A.onecmd("mul B A A")
+    assert shell_with_A.matrices["B"] == [
+                                [Fraction(5,2), Fraction(5,2)],
+                                [Fraction(15), Fraction(35,2)],
+                                    ]  
 
 #mo helpers TODO: finish reformatting with m2x2
 
@@ -65,8 +73,8 @@ def test_dot_product():
 
 def test_matrix_mul(m2x2):
     assert mo.matrix_mul(m2x2, m2x2) == [
-                                [Fraction(5/2), Fraction(5/2)],
-                                [Fraction(15), Fraction(35/2)],
+                                [Fraction(5,2), Fraction(5,2)],
+                                [Fraction(15), Fraction(35,2)],
                                     ]
 
 

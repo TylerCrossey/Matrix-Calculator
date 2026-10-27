@@ -49,7 +49,23 @@ class MatrixShell(cmd.Cmd):
         except KeyError as e:
             print(e.args[0])
 
-    #do commands    
+    #do commands   
+
+    def do_mul(self, arg):
+        """mul NAME MATRIX1 MATRIX2, e.g. mul C A B"""
+        args = arg.split()
+        if len(args) != 3:
+            print("usage: mul NAME MATRIX1 MATRIX2")
+            return
+
+        name, m1_text, m2_text = args
+        m1, m2 =  self._get(m1_text), self._get(m2_text)
+        self.matrices[name] = mo.matrix_mul(m1, m2)
+
+        print(f"Updated matrix {name} is:")
+        self.show(name)
+        return 
+
 
     def do_set(self, arg):
         """set NAME MATRIX: store a matrix, e.g. set A 1,1/2;3,4"""

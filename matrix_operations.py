@@ -78,12 +78,12 @@ def _augment(left: Matrix, right: Matrix) -> Matrix:
     #create tuples of (row(left), row(right)), then unpack with for a, b, and combine
     return [a + b for a, b in zip(left, right)] 
 
-def _dot_product(list1: Fraction, list2: Fraction) -> int:
+def _dot_product(list1: list[Fraction], list2: list[Fraction]) -> int:
     """Returns the dot product of two arrays of fractions"""
-    sum = 0
+    total = Fraction(0)
     for i, j in zip(list1, list2):
-        sum += i*j
-    return sum
+        total += i*j
+    return total
 
 
 def matrix_mul(left: Matrix, right: Matrix) -> Matrix:
