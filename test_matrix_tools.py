@@ -69,7 +69,11 @@ def test_dot_product():
 
 #mo functions
 
-#def test_matrix_mul():
+def test_inverse(m2x2):
+    assert mo.inverse(m2x2) == [
+                                [Fraction(8,5), Fraction(-1,5)],
+                                [Fraction(-6,5), Fraction(2,5)],
+                                ]                            
 
 def test_matrix_mul(m2x2):
     assert mo.matrix_mul(m2x2, m2x2) == [

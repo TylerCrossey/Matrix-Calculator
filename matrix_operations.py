@@ -105,17 +105,25 @@ def matrix_mul(left: Matrix, right: Matrix) -> Matrix:
     
 
 def inverse(matrix: Matrix) -> Matrix:
-    """Return the inverse of a square matrix.
+    """Return the inverse of a square matrix."""
+    if not matrix:
+        raise ValueError("matrix must be non-empty")
 
-    Raises
-        ValueError: if the matrix is not square or is singular.
-    """
+    n = len(matrix)
+    m = len(matrix[0])
+    if n != m: 
+        raise ValueError("matrix must be square")
 
-    #raise error if not square
-    #if 2x2, check determinant != 0, then do determinant shenanigans
-    #otherwise, send row reduction (will need to be implemented anyway)
-    # - augment nxn identity, call modified row_reduce for auged matrices?
-    # - maybe just overload with cols as argument for row_reduce (row_reduce(m, n = len(m)))
-    #figure out determinant for error checking later
+    I = _identity(n)
+
+    #augment input matrix with I of same dimensions, then row reduce so input becomes I
+    #inverse will be on the right side
+    reduced = row_reduce(_augment(matrix, I)) 
+
+    #validate that the original matrix (left side nxn) is now I, if not there is no inverse
+    if [row[:n] for row in reduced] != I:
+        raise ValueError("matrix is singular")
+    #return right side matrix (inverse)
+    return[row[n:] for row in reduced]
 
     raise NotImplementedError

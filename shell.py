@@ -43,6 +43,14 @@ class MatrixShell(cmd.Cmd):
             raise KeyError(f"no matrix named {name}")
         return self.matrices[name]
 
+    def _row_index(self, m, text):
+        """Convert an input row number to the corresponding validated index"""
+        i = int(text)
+        if not 1<= i <= len(m): #validate index will not be out of bounds
+            raise ValueError(f"rows must be between 1 and {len(m)}")
+        return i - 1
+    
+
     def show(self, name):
         """show NAME: print a stored matrix"""
         try:
@@ -90,10 +98,10 @@ class MatrixShell(cmd.Cmd):
             print("usage: swap NAME ROW1 ROW2")
             return
 
-        name, i_text, j_text = args 
-        i, j = int(i_text), int(j_text) #get args and convert row values to int
+        name, i_text, j_text = args
         m = self._get(name)
-        mo._swap_rows(m, i-1, j-1)
+        i, j = self._row_index(m, i_text), self._row_index(m, j_text)
+        mo._swap_rows(m, i, j)
 
         if not (1 <= i <= len(m) and 1 <= j <= len(m)): #validate not out of bounds
             raise ValueError(f"rows must be between 1 and {len(m)}")
@@ -102,14 +110,54 @@ class MatrixShell(cmd.Cmd):
         print(f"Updated matrix {name} is:")
         self.show(name)
 
-    #def do_scale
+    def do_scale(self, arg):
+        """scale NAME ROW FACTOR: multiply a row by a factor, e.g. scale A 1 1/2"""
+        args = arg.split()
+        if len(args) != 3:
+            print("usage: scale NAME ROW FACTOR")
+            return
+
+        name, row_text, factor_text = args
+        m = self._get(name)
+        factor = Fraction(factor_text)
+        row = self._row_index(m, row_text)
+
+        mo._scale_row(m, row, factor)
+        print(f"Updated matrix {name} is:")
+        self.show(name)
 
 
+    def do_rref(self, arg):
+        "rref NAME: show the reduced row echelon form (does not edit original)"
+        m = self._get(arg.strip())
+        print(self.format_matrix(mo.row_reduce(m))) #row reduce matrix, then format, then print
+
+    def do_add(self, arg):
+        """add NAME TARGET SOURCE FACTOR: add factor times source row to target row, in place"""
+        args = arg.split()
+        if len(args) != 4:
+            print("usage: scale NAME ROW FACTOR")
+            return
+
+        name, target_text, source_text, factor_text = args
+        m = self._get(name)
+        target, source = self._row_index(m, target_text), self._row_index(m, source_text)
+        factor = Fraction(factor_text)
+
+        mo._add_multiple(m, target, source, factor)
+        print(f"Updated matrix {name} is:")
+        self.show(name)
+
+    def do_inv(self, arg):
+        """inv NAME: show the inverse of a matrix (does not edit original)"""
+        m = self._get(arg.strip())
+        print(self.format_matrix(mo.inverse(m)))
+
+
+
+    ##add to pytest!!
+    #add debug and verbosity settings, numpad mode (eventually)
     
-
-    ##TODO: more error handling, add to pytest!!
-    #add debug and verbosity settings, numpad mode
-    #finish implementing do_funcs
 
 
     #exit handling
