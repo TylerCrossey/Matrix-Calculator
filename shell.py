@@ -1,5 +1,6 @@
 import cmd, shlex
-from fractions import Fraction 
+from fractions import Fraction
+from matrix_operations import Matrix 
 import matrix_operations as mo
 
 class MatrixShell(cmd.Cmd):
@@ -102,6 +103,7 @@ class MatrixShell(cmd.Cmd):
         self.show(name)
 
     #def do_scale
+
 
     
 

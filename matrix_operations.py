@@ -6,7 +6,8 @@ Matrix = list[list[Fraction]]
 
 def _swap_rows(m: Matrix, i: int, j: int) -> None:
     """Swap rows i and j of m in place."""
-    if i>len(m) or j>len(m):
+    #catch negative i or j, catch i or j greater than dimension
+    if not (0 <= i <len(m) or 0 <= j < len(m)): 
         raise ValueError("Swap target out of matrix bounds") 
     m[i], m[j] = m[j], m[i]
 
@@ -57,7 +58,7 @@ def row_reduce(matrix: Matrix) -> Matrix:
 
         for i in range(rows): #clear the rest of the column   
             if m[i][col] != 0 and i != pivot_row:
-                _add_multiple(m, i, 0, -m[i][col])
+                _add_multiple(m, i, pivot_row, -m[i][col])
 
         pivot_row += 1
 
@@ -65,7 +66,7 @@ def row_reduce(matrix: Matrix) -> Matrix:
 
 def _identity(n: int) -> Matrix:
     """Return the identity matrix of size nxn."""
-    return [[Fraction(int(i==j)) for j in range(n)] for i in range [n]]
+    return [[Fraction(int(i==j)) for j in range(n)] for i in range(n)]
 
 def _augment(left: Matrix, right: Matrix) -> Matrix:
     """Return left matrix augmented with right matrix"""

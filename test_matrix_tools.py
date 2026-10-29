@@ -103,8 +103,12 @@ def test_augment():
         ]
 
 
-def test_inverse_of_identity_is_identity(identity2x2):
-    assert mo.inverse(identity2x2) == identity2x2
+def test_row_reduce_3x3():
+    m = [[Fraction(1), Fraction(1), Fraction(-1)], 
+        [Fraction(1), Fraction(-1), Fraction(2)], 
+        [Fraction(2), Fraction(1), Fraction(1)], 
+        ]
+    assert mo.row_reduce(m) == mo._identity(3)
 
 
 def test_singular_matrix_raises():
