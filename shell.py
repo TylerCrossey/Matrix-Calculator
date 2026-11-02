@@ -103,10 +103,6 @@ class MatrixShell(cmd.Cmd):
         i, j = self._row_index(m, i_text), self._row_index(m, j_text)
         mo._swap_rows(m, i, j)
 
-        if not (1 <= i <= len(m) and 1 <= j <= len(m)): #validate not out of bounds
-            raise ValueError(f"rows must be between 1 and {len(m)}")
-            
-
         print(f"Updated matrix {name} is:")
         self.show(name)
 
