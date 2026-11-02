@@ -17,7 +17,7 @@ Requires Python 3.10 or newer.
 
 ```bash
 git clone https://github.com/TylerCrossey/Matrix-Calculator.git
-cd matrix-calculator
+cd Matrix-Calculator
 pip install -r requirements.txt   # only needed for the tests
 python main.py
 ```
@@ -85,6 +85,7 @@ All rows must have the same number of entries. Row numbers in commands start at 
 | `swap NAME ROW1 ROW2` | swap two rows |
 | `scale NAME ROW FACTOR` | multiply a row by a nonzero factor, e.g. `scale A 1 1/2` |
 | `add NAME TARGET SOURCE FACTOR` | add FACTOR times the SOURCE row to the TARGET row |
+| `mul NAME MATRIX1 MATRIX2` | multiply MATRIX1 times MATRIX2, store in NAME, e.g. `mul C A B`|
 | `rref NAME` | print the reduced row echelon form |
 | `inv NAME` | print the inverse of a square matrix |
 | `help` / `help COMMAND` | list commands or show usage for one |
